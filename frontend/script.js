@@ -37,3 +37,16 @@ function submitFeedback() {
 }
 
 populateCourses();
+
+function updateSlider(attribute) {
+    let slider = document.getElementById(attribute);
+    let leftValueDisplay = document.getElementById(attribute + "Value");
+    let rightValueDisplay = document.getElementById(attribute === "conceptual" ? "practicalValue" :
+                                                     attribute === "analytical" ? "creativeValue" :
+                                                     attribute === "individual" ? "collaborativeValue" :
+                                                     attribute === "rigid" ? "flexibleValue" :
+                                                     "qualitativeValue");
+
+    leftValueDisplay.textContent = (100 - slider.value) + "%";
+    rightValueDisplay.textContent = slider.value + "%";
+}
