@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UTSC Course Feedback</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>UTSC Course Feedback</h2>
+        
+        <label for="course">Select a Course:</label>
+        <input type="text" id="courseSearch" placeholder="Search for a course..." onkeyup="filterCourses()">
+        <select id="course" size="5"></select>
+        
+        <div id="feedbackForm" style="display:none;">
+            <h3>Rate the Course</h3>
+            <div class="slider-container">
+                <label>Conceptual vs. Practical</label>
+                <input type="range" min="0" max="100" value="50" id="conceptual">
+            </div>
+            <div class="slider-container">
+                <label>Analytical vs. Creative</label>
+                <input type="range" min="0" max="100" value="50" id="analytical">
+            </div>
+            <div class="slider-container">
+                <label>Individual vs. Collaborative</label>
+                <input type="range" min="0" max="100" value="50" id="individual">
+            </div>
+            <div class="slider-container">
+                <label>Rigid vs. Flexible</label>
+                <input type="range" min="0" max="100" value="50" id="rigid">
+            </div>
+            <div class="slider-container">
+                <label>Quantitative vs. Qualitative</label>
+                <input type="range" min="0" max="100" value="50" id="quantitative">
+            </div>
+            <button onclick="submitFeedback()">Submit</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
