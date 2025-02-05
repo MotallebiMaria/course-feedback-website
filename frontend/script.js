@@ -19,21 +19,52 @@ function filterCourses() {
     }
 }
 
-courseSelect.addEventListener("change", function() {
-    document.getElementById("feedbackForm").style.display = "block";
+document.getElementById("course").addEventListener("change", function() {
+    const selectedCourse = this.value;
+    const feedbackForm = document.getElementById("feedbackForm");
+    const selectedCourseSpan = document.getElementById("selectedCourse");
+
+    if (selectedCourse) {
+        selectedCourseSpan.textContent = selectedCourse;
+        feedbackForm.style.display = "block";
+    } else {
+        feedbackForm.style.display = "none";
+    }
 });
 
 function submitFeedback() {
     let selectedCourse = courseSelect.value;
     let feedback = {
-        conceptual: document.getElementById("conceptual").value,
-        analytical: document.getElementById("analytical").value,
-        individual: document.getElementById("individual").value,
-        rigid: document.getElementById("rigid").value,
-        quantitative: document.getElementById("quantitative").value
+        course: selectedCourse,
+        conceptual: parseInt(document.getElementById("conceptual").value),
+        analytical: parseInt(document.getElementById("analytical").value),
+        individual: parseInt(document.getElementById("individual").value),
+        rigid: parseInt(document.getElementById("rigid").value),
+        quantitative: parseInt(document.getElementById("quantitative").value)
     };
-    console.log("Feedback for", selectedCourse, feedback);
-    alert("Feedback submitted!");
+
+    fetch("https://ucqasdyusfebtohttrct.supabase.co/rest/v1/feedback", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVjcWFzZHl1c2ZlYnRvaHR0cmN0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg3Njk5MDUsImV4cCI6MjA1NDM0NTkwNX0.auN5mnO4aIeH4UMlkqlu6hSTLFBAJtrT74Zmk7sAmvU",
+            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVjcWFzZHl1c2ZlYnRvaHR0cmN0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg3Njk5MDUsImV4cCI6MjA1NDM0NTkwNX0.auN5mnO4aIeH4UMlkqlu6hSTLFBAJtrT74Zmk7sAmvU",
+            "Prefer": "return=representation"
+        },
+        body: JSON.stringify(feedback)
+    })
+    .then(response => {
+        console.log("Response Status:", response.status);
+        return response.json();
+    })
+    .then(data => {
+        console.log("Response Data:", data);
+        alert("Feedback submitted successfully!");
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        alert("There was an error submitting feedback.");
+    });
 }
 
 populateCourses();
